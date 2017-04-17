@@ -2,10 +2,13 @@
 
 <h1>This is mee...</h1>
 
+<a href="/campgrounds/new">Add New Campground</a>
+
 <% campgrounds.forEach(function(campground){%>
 	<div>
 	  <h4><%= campground.name %></h4>
 	  <img src="<%= campground.image %>">
+	  
 	</div>
 	
 <% }); %>
