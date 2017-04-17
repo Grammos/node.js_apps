@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 app.get("/", function(req, res){
 	res.render("landing.ejs");
@@ -9,10 +10,16 @@ app.get("/", function(req, res){
 
 app.get("/campgrounds", function(req, res){
 	var campgrounds = [
-		{name: "Brezovica", image: "http://www.snow-forecast.com/system/images/6583/large/Brezovica.jpg?1295559617"},
-		{name: "Rugova", image: "https://upload.wikimedia.org/wikipedia/commons/1/13/Pamje_pranverore_n%C3%AB_Rugov%C3%AB_Pej%C3%AB.JPG"},
-		{name: "Kacanik", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Panorama_of_Kacanik%2C_Kosovo.jpg/1200px-Panorama_of_Kacanik%2C_Kosovo.jpg"}
-	]
+        {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
+        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
+        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"},
+        {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
+        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
+        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"},
+        {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
+        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
+        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"}
+];
 
 
 	res.render("campgrounds", {campgrounds:campgrounds});
