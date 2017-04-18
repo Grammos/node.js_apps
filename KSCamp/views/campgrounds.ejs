@@ -1,16 +1,22 @@
 <% include partials/header %>
+<div class="container">
+  <header class="jumbotron">
+  	 <div class="container">
+	     <h1>Kosovo's Camping places!</h1>
+	     <p>Check your hand-picked campgrounds from all over Kosovo.</p>
+	     <p>
+	     	<a class="btn btn-primary btn-large" href="/campgrounds/new">Add New Campground</a>
+	     </p>
+	  </div>
+  </header>
 
-<h1>This is mee...</h1>
-
-<a href="/campgrounds/new">Add New Campground</a>
 
 <% campgrounds.forEach(function(campground){%>
 	<div>
 	  <h4><%= campground.name %></h4>
 	  <img src="<%= campground.image %>">
-	  
 	</div>
-	
-<% }); %>
+ <% }); %>
+</div>
 
 <% include partials/footer %>
