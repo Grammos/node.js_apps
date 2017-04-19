@@ -1,0 +1,11 @@
+<h1> Hello I'm the INDEXXX </h1>
+
+<!-- loop through all the blogs-->
+<% blogs.forEach(function(blog){ %>
+	<div>
+		<h2><%= blog.title %></h2>
+		<img src="<%= blog.image %>">
+		<span><%= blog.created %></span>
+		<p><%= blog.body%></p>
+	</div>
+<% }) %>

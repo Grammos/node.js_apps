@@ -20,9 +20,23 @@ var blogSchema = new mongoose.Schema({
 // "compile" to the model
 var Blog = mongoose.model("Blog", blogSchema);
 
-
-
 // RESTFUL routes
+app.get("/", function(req, res){
+	res.redirect("/blogs");
+});
+
+app.get("/blogs", function(req, res){
+	// retrieving all the data from DB
+	Blog.find({}, function(err, blogs){
+		if(err){
+			console.log(err);
+		}else{
+		 //rendering the page with the data retrieved from DB
+		 res.render("index", {blogs: blogs});
+		}
+	});
+});
+
 
 
 
