@@ -68,6 +68,9 @@ app.get("/blogs/:id", function(req, res){
 	});
 });
 
+
+
+
 // MONGOOSE/MODEL CONFIG
 app.listen(3000, "localhost",  function(){
 	console.log("Server is running!");
