@@ -44,7 +44,7 @@ app.get("/blogs/new", function(req, res){
 	res.render("new");
 });
 
-//CREATE ROUTE 
+// CREATE ROUTE 
 app.post("/blogs", function(req, res){
 	//create blog
 	Blog.create(req.body.blog, function(err, newBlog){
@@ -55,6 +55,17 @@ app.post("/blogs", function(req, res){
 		}
 	});
 
+});
+
+// SHOW ROUTE
+app.get("/blogs/:id", function(req, res){
+	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err){
+			res.render("/blogs");
+		} else{
+			res.render("show", {blog: foundBlog});
+		}
+	});
 });
 
 // MONGOOSE/MODEL CONFIG
