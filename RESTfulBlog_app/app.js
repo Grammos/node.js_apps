@@ -1,15 +1,15 @@
-var express    = require("express"),
- 	app        = express(),
- 	bodyParser = require("body-parser");
- 	mongoose    = require("mongoose");
+var bodyParser = require("body-parser"),
+	mongoose   = require("mongoose"),
+	express    = require("express"),
+	app        = express();
 
-//connect moongose to the mongodb's db
+// APP CONFIG
 mongoose.connect("mongodb://localhost/blog_app");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
-//schema design for this app- Mongoose/Model config
+// MONGOOSE/MODEL CONFIG
 var blogSchema = new mongoose.Schema({
 	title: String,
 	image: String,
@@ -17,46 +17,49 @@ var blogSchema = new mongoose.Schema({
 	created: {type: Date, default: Date.now}
 });
 
-// "compile" to the model
+// A single connection
 var Blog = mongoose.model("Blog", blogSchema);
 
-// RESTFUL routes
+// RESTFUL ROUTES
 app.get("/", function(req, res){
 	res.redirect("/blogs");
 });
 
-// INDEX route
+// INDEX ROUTE
 app.get("/blogs", function(req, res){
-	// retrieving all the data from DB
+//retrieving all the data from the DB
 	Blog.find({}, function(err, blogs){
+		//check if there's any error
 		if(err){
-			console.log(err);
-		}else{
-		 //rendering the page with the data retrieved from DB
-		 res.render("index", {blogs: blogs});
+			console.log("ERROR!");
+		} else {
+			// if not, render the page and retrieve all DB's data
+			res.render("index", {blogs: blogs});
 		}
 	});
 });
 
-// New route
+// NEW ROUTE
 app.get("/blogs/new", function(req, res){
 	res.render("new");
 });
 
-// Create route
+//CREATE ROUTE 
 app.post("/blogs", function(req, res){
-	// create blog
+	//create blog
 	Blog.create(req.body.blog, function(err, newBlog){
 		if(err){
 			res.render("new");
-		}else{
-			//then, redirect to the index
+		} else {
 			res.redirect("/blogs");
 		}
 	});
 
 });
 
-app.listen(3000, function() {
-	console.log("Server is running on localhost:3000");
+// MONGOOSE/MODEL CONFIG
+app.listen(3000, "localhost",  function(){
+	console.log("Server is running!");
 });
+
+	
