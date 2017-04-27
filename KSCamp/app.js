@@ -35,7 +35,7 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 
 
 app.get("/", function(req, res){
-	res.render("landing.ejs");
+	res.render("landing");
 });
 
 // INDEX - show all campgrounds

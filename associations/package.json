@@ -1,0 +1,22 @@
+{
+  "name": "associations",
+  "version": "1.0.0",
+  "description": "Pratices on different types of associations!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grammos/node.js_apps.git"
+  },
+  "author": "Motivated from Colt's Udemy course!",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Grammos/node.js_apps/issues"
+  },
+  "homepage": "https://github.com/Grammos/node.js_apps#readme",
+  "dependencies": {
+    "mongoose": "^4.9.6"
+  }
+}
