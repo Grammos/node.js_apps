@@ -6,13 +6,14 @@ var express    = require("express"),
     Comment    = require("./models/comment"),
     seedDB     = require("./seeds");
 
-seedDB();
+
 //connect moongose to the mongodb's db
 mongoose.connect("mongodb://localhost/ks_camp");    
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
+app.use(express.static(__dirname + "/public"));
+seedDB();
 
 app.get("/", function(req, res){
 	res.render("landing");
