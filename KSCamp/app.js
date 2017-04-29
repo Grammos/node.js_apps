@@ -2,28 +2,15 @@ var express    = require("express"),
     app        = express(),
     bodyParser = require("body-parser"),
     mongoose   = require("mongoose"),
-    Campground = require("./models/campground");
+    Campground = require("./models/campground"),
+    seedDB     = require("./seeds");
 
+seedDB();
 //connect moongose to the mongodb's db
 mongoose.connect("mongodb://localhost/ks_camp");    
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
-
-// Campground.create(
-// 	{ 
-// 		name: "Salmon Creek", 
-// 		image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg",
-// 		description: "This is a huge blah. No, O2!"
-// 	}, function(err, campground){
-// 		if(err){
-// 			console.log(err);
-// 		}else{
-// 			console.log("NEWLY CREATED Campground :D!");
-// 			console.log(campground);
-// 		}
-// 	});
 
 
 app.get("/", function(req, res){
@@ -70,10 +57,11 @@ app.get("/campgrounds/new", function(req, res){
 // SHOW - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
 	//find the campground with the provided ID
-	Campground.findById(req.params.id, function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
 		if(err){
 			console.log(err);
 		}else{
+			console.log(foundCampground);
 		   //render show template with that campground
 	       res.render("show", {campground: foundCampground});
 
