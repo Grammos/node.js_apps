@@ -25,6 +25,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(new LocalStrategy(User.authenticate()));
 //reading the session, taking the data from the session that's encoded
 //and uncoded and encoded again and putting them in the session again!
 passport.serializeUser(User.serializeUser());
@@ -57,15 +58,41 @@ app.post("/register", function(req, res){
 			console.log(err);
 			return res.render("register");
 		} 
+		//tries to login and take the pass to compare to the 
+		//hash saved password 
 		passport.authenticate("local")(req, res, function(){
 			res.redirect("/secret");
 		});
 	});
 });
 
+// Login Routes
+// render login form
+app.get("/login", function(req, res){
+	res.render("login");
+});
+//login logic
+//middleware
+app.post("/login", passport.authenticate("local", {
+	successRedirect: "/secret",
+	failureRedirect: "/login"
+}) ,function(req, res){
+
+});
+
 app.listen(3000, function(){
 	console.log("Server is running on localhost:3000");
 });
+
+
+
+
+
+
+
+
+
+
 
 
 
