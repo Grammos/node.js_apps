@@ -39,7 +39,7 @@ app.get("/", function(req, res){
 	res.render("home");
 });
 
-app.get("/secret", function(req, res){
+app.get("/secret", isLoggedIn, function(req, res){
 	res.render("secret");
 })
 
@@ -80,22 +80,23 @@ app.post("/login", passport.authenticate("local", {
 
 });
 
+//logout logic
+app.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("/");
+});
+
+//middleware - that would check if the req is authenticated!
+//move along to the next -->callback of the /secret
+//if not redirect to login
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
+
 app.listen(3000, function(){
 	console.log("Server is running on localhost:3000");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
