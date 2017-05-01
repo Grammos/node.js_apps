@@ -94,7 +94,9 @@ app.get("/campgrounds/:id", function(req, res){
 // Comments Routes
 // ==============================
 
-app.get("/campgrounds/:id/comments/new", function(req, res){
+//first it check if the user is logged in, as a way to check  
+//to comment. if not logged in that would redirect to /login
+app.get("/campgrounds/:id/comments/new", inLoggedIn, function(req, res){
 	// find campground by id
 	Campground.findById(req.params.id, function(err, campground){
 		if(err){
@@ -105,7 +107,9 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
 	});
 });
 
-app.post("/campgrounds/:id/comments", function(req, res){
+
+// inLoggedIn - to prevent anyone to comment without login first!
+app.post("/campgrounds/:id/comments", inLoggedIn, function(req, res){
 	//lookup campground using ID
 	Campground.findById(req.params.id, function(err, campground){
 		if(err){
@@ -174,6 +178,14 @@ app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/campgrounds");
 });
+
+function inLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
+
 
 app.listen(3000, function(){
 	console.log("Server is running on localhost:3000");
