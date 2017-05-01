@@ -11,13 +11,28 @@ var express    = require("express"),
 
 
 //connect moongose to the mongodb's db
-mongoose.connect("mongodb://localhost/ks_camp");    
+mongoose.connect("mongodb://localhost/ks_camp");  
+//tell app.js what to use  
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 seedDB();
 
+// PASSPORT configuration
+app.use(require("express-session")({
+	secret: "Kosova Kosovo Kosova",
+	resave: false,
+	saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// APP Routes
 app.get("/", function(req, res){
 	res.render("landing");
 });
