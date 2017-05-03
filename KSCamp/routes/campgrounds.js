@@ -20,14 +20,19 @@ router.post("/", inLoggedIn, function(req, res){
 	var name = req.body.name;
 	var image = req.body.image;
 	var desc = req.body.description;
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	}
 	//creating the objects in order to push to the array
-	var newCampground = {name:name, image:image, description:desc}
+	var newCampground = {name:name, image:image, description:desc, author:author}
 	// create a new campground and save to the DB
-	Campground.create(newCampground, function(err, newlyCreate){
+	Campground.create(newCampground, function(err, newlyCreated){
 		if(err){
 			console.log(err);
 		}else{
 			//redirect to the "get" request route
+			console.log(newlyCreated)
 			res.redirect("/campgrounds");
 		}
 	});
