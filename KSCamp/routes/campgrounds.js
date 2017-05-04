@@ -57,6 +57,32 @@ router.get("/:id", function(req, res){
 
 		}
 	});
+});
+
+// EDIT campground route
+router.get("/:id/edit", function(req, res){
+	Campground.findById(req.params.id, function(err, foundCampground){
+		if(err){
+			res.redirect("/campgrounds");
+		} else {
+			res.render("campgrounds/edit", {campground: foundCampground});
+		}
+	});	
+});
+
+// UPDATE campground route
+router.put("/:id", function(req, res){
+	//var data = {name: req.body.name, image: req.body.image, description: req.body.description}
+	//or instead of var data, we can "interfere to the edit.js, input by doing campground[name]"
+	//find and upadate the correct campground
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
+		if(err){
+			res.redirect("/campgrounds");
+		} else {
+			//redirect somewhere(show page)
+			res.redirect("/campgrounds/" + req.params.id);
+		}
+	});
 	
 });
 
