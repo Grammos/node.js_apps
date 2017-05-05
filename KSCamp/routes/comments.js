@@ -51,6 +51,10 @@ router.post("/", inLoggedIn, function(req, res){
 	});
 });
 
+router.get("/:comment_id/edit", function(req, res){
+	res.send("edit route for comment!");
+});
+
 //middleware
 function inLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
