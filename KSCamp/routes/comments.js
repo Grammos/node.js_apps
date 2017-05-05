@@ -63,12 +63,25 @@ router.get("/:comment_id/edit", function(req, res){
 	
 });
 
-// COMMENT UPDATE
+// COMMENT UPDATE Route
 router.put("/:comment_id", function(req, res){
 	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
 		if(err){
 			res.redirect("back");
 		} else {
+			res.redirect("/campgrounds/" + req.params.id);
+		}
+	})
+});
+
+// Comment Destroy Route
+router.delete("/:comment_id", function(req, res){
+	//findByIdAndRemove
+	Comment.findByIdAndRemove(req.params.comment_id, function(err){
+		if(err){
+			res.redirect("back");
+		} else {
+			// campground id, not the comment id
 			res.redirect("/campgrounds/" + req.params.id);
 		}
 	})
