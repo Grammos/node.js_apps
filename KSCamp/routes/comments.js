@@ -3,6 +3,7 @@ var router   = express.Router({mergeParams: true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
+
 // Comments New
 //first it check if the user is logged in, as a way to check  
 //to comment. if not logged in that would redirect to /login
@@ -31,6 +32,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 			//create new comment
 			Comment.create(req.body.comment, function(err, comment){
 				if(err){
+					req.flash("error", "Something went wrong!");
 					console.log(err);
 				} else{
 					//add username and id to comment
@@ -42,6 +44,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 					campground.comments.push(comment);
 					campground.save();
 					console.log(comment);
+					req.flash("success", "Successfully added comment!");
 					//redirect campground show page
 					res.redirect("/campgrounds/" + campground._id);
 				}
@@ -81,6 +84,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
 		if(err){
 			res.redirect("back");
 		} else {
+			req.flash("success", "Comment deleted!");
 			// campground id, not the comment id
 			res.redirect("/campgrounds/" + req.params.id);
 		}
